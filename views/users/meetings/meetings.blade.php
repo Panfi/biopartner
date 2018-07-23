@@ -15,36 +15,38 @@
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            <th class="text-center">Active</th>
+                            {{-- <th class="text-center">Active</th> --}}
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Created Date</th>
                             <th>Updated Date</th>
-                            <th></th>
+                            <th width="18%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($meetings as $meeting)
                         <tr>
-                            <td>{!! $meeting->subject !!}</td>
-                            <td class="text-center {!! ($meeting->is_active) ? 'process' : 'denied' !!}">{!! ($meeting->is_active) ? "Yes" : "No" !!}</td>
-                            <td>{!! $meeting->start_at !!}</td>
-                            <td>{!! $meeting->end_at !!}</td>
-                            <td>{!! $meeting->created_at !!}</td>
-                            <td>{!! $meeting->updated_at !!}</td>
+                            <td class="text-info pointer" title="{!! $meeting->body !!}" data-toggle="tooltip">
+                                {!! $meeting->subject !!}
+                            </td>
+                            {{-- <td class="text-center {!! ($meeting->is_active) ? 'process' : 'denied' !!}">{!! ($meeting->is_active) ? "Yes" : "No" !!}</td> --}}
+                            <td>{!! date('F d, Y H:i', strtotime($meeting->start_at)) !!}</td>
+                            <td>{!! date('F d, Y H:i', strtotime($meeting->end_at)) !!}</td>
+                            <td>{!! date('F d, Y H:i', strtotime($meeting->created_at)) !!}</td>
+                            <td>{!! date('F d, Y H:i', strtotime($meeting->updated_at)) !!}</td>
                             <td>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <a href="{!! url('user/meeting/edit', $meeting->id) !!}">
                                             <i class="fa fa-pencil"></i> Edit
                                         </a>
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <a href="{!! url('user/meeting/invite', $meeting->id) !!}" class="text-success">
                                             <i class="fa fa-user"></i> Invite
                                         </a>
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> --}}
+                                    <div class="col-md-6">
                                         <a href="{!! url('user/meeting/delete', $meeting->id) !!}" class="text-danger">
                                             <i class="fa fa-remove"></i> Delete
                                         </a>

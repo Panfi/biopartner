@@ -72,6 +72,14 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
+    public function invites()
+    {
+        return $this->hasMany(MeetingInvites::class, 'attendee_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function notifications()
     {
         return $this->hasMany(UserNotifications::class);

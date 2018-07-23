@@ -49,6 +49,8 @@ Route::group(['namespace' => '\biopartnering\biopartnering\Http\Controllers', 'm
         Route::get('/calender', ['uses' => 'User\MeetingsController@calender']);
         Route::match(['get', 'post'], '/meeting/add', ['uses' => 'User\MeetingsController@add_meeting']);
         Route::match(['get', 'put'], '/meeting/edit/{id}', ['uses' => 'User\MeetingsController@edit_meeting']);
+        Route::get('/meeting/delete/{id}', ['uses' => 'User\MeetingsController@delete_meeting']);
+        Route::get('/meeting/confirm/{id}/{accept}', ['uses' => 'User\MeetingsController@confirm_meeting']);
 
         //AJAX routes
         Route::group(['prefix' => 'ajax'], function()

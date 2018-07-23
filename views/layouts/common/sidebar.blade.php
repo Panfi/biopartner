@@ -12,11 +12,6 @@
                     <a class="js-arrow" href="{!! url('/') !!}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                 </li>
                 <li>
-                    <a href="table.html">
-                        <i class="fas fa-table"></i>Profiles/Book Meetings
-                    </a>
-                </li>
-                <li>
                     <a href="{!! url('user/meetings') !!}">
                         <i class="fas fa-user"></i>Manage Meetings
                     </a>

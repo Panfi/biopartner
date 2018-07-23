@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use biopartnering\biopartnering\Models\User;
 use biopartnering\biopartnering\Models\Meeting;
 use biopartnering\biopartnering\Models\MeetingInvites;
+use \biopartnering\biopartnering\plugins\Mailer;
+use Mail;
 use Auth;
 use Response;
 use Carbon;
@@ -44,6 +46,17 @@ class MeetingsController extends Controller
             $invite->created_at = Carbon\Carbon::now();
             $invite->save();
 
+            $user = User::find($request->get('recipient'));
+            $input = [
+                'invite_id' => $invite->id, 
+                'to' => $user->email, 
+                'title' => $meeting->subject, 
+                'start_at' => $meeting->start_at, 
+                'end_at' => $meeting->end_at
+            ];
+
+            $this->send_meeting_request_mail($input);
+
             return redirect('user/meetings');
         }
 
@@ -52,7 +65,7 @@ class MeetingsController extends Controller
 
     public function edit_meeting(Request $request, $id)
     {
-        if($request->isMethod('post'))
+        if($request->isMethod('put'))
         {
             $meeting = Meeting::find($id);
             // $meeting->organizer_id = Auth::user()->id;
@@ -71,20 +84,33 @@ class MeetingsController extends Controller
             return redirect('user/meetings');
         }
 
-        return view('biopartnering::users.meetings.edit');
+        $meeting = Meeting::find($id);
+        
+        return view('biopartnering::users.meetings.edit', compact('meeting'));
+    }
+
+    public function delete_meeting($id)
+    {
+        $meeting = Meeting::find($id);
+        
+        MeetingInvites::where('meeting_id', $meeting->id)->delete();
+        
+        $meeting->delete();
+
+        return redirect('user/meetings');
     }
 
     public function calender()
     {
+        $meetings = Auth::user()->meetings;
         $invites = MeetingInvites::where('attendee_id', Auth::user()->id)->get();
         
         $events = [];
 
-        if($invites->count())
+        if($meetings->count())
         {
-            foreach($invites as $invite)
+            foreach($meetings as $meeting)
             {
-                $meeting = $invite->meeting;
                 $events[] = Calendar::event(
                     $meeting->subject,
                     false,
@@ -99,8 +125,45 @@ class MeetingsController extends Controller
             }
         }
 
+        if($invites->count())
+        {
+            foreach($invites as $invite)
+            {
+                $meeting = $invite->meeting;
+                $events[] = Calendar::event(
+                    $meeting->subject,
+                    false,
+                    $meeting->start_at,
+                    $meeting->end_at,
+                    null,
+                    [
+                        'color' => '#f05050',
+                        'url' => '#'//url('user/meeting/edit', $meeting->id),
+                    ]
+                );
+            }
+        }
+
         $calendar = Calendar::addEvents($events);
 
         return view('biopartnering::users.meetings.calender', compact('calendar'));
+    }
+
+    private function send_meeting_request_mail($input)
+    {
+        $input['subject'] = "Meeting Request";
+        $input['mail_template'] = 'biopartnering::emails.meeting_request';
+        $input['organizer'] = Auth::user()->email;
+
+        Mail::to($input['to'])->send(new Mailer($input));
+    }
+
+    public function confirm_meeting($id, $accept)
+    {
+        $invite = MeetingInvites::find($id);
+        $invite->status = ($accept) ? "Accepted" : "Declined";
+        $invite->save();
+
+        return redirect('/user/meetings');
     }
 }

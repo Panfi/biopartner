@@ -1,3 +1,7 @@
 .no-top-border {
     border-top: 0;
 }
+
+.pointer {
+    cursor: pointer;
+}

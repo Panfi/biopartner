@@ -6,6 +6,10 @@
 
 @section('content')
 
+@push('style')
+    {!! Html::style(url('vendor/biopartnering/css/bootstrap-datetimepicker.min.css')) !!}
+@endpush
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -96,7 +100,12 @@
                                         <label class="form-control-label"><b>Select Date</b></label>
                                     </div>
                                     <div class="col-12 col-md-10">
-                                        <input type="date" id="date" name="date" class="form-control col-sm-3">
+                                        <div class='input-group date' id='date_timepicker'>
+                                            <input type="text" id="date" name="date" class="form-control">
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>               
                                 </div>
                             </div>
@@ -118,21 +127,28 @@
                                         <div class="col-12 col-md-9">
                                             <div class="row">
                                                 <div class="col-md-5" style="display: none" id="availability_flags">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <input type="text" id="from_time" name="from_time" class="form-control">
-                                                            <div class="input-group-btn">
-                                                                <spam class="btn btn-secondary">
-                                                                    to
-                                                                </spam>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class='input-group date' id='from_timepicker'>
+                                                                <input type="text" id="from_time" name="from_time" class="form-control" placeholder="From">
+                                                                <span class="input-group-addon">
+                                                                    <span class="fa fa-clock"></span>
+                                                                </span>
                                                             </div>
-                                                            <input type="text" id="to_time" name="to_time" class="form-control">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class='input-group date' id='to_timepicker'>
+                                                                <input type="text" id="to_time" name="to_time" class="form-control" placeholder="To">
+                                                                <span class="input-group-addon">
+                                                                    <span class="fa fa-clock"></span>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mt-1 text-center">
                                                     <span>Not Availability</span>
-                                                    <label class="switch switch-3d switch-success mx-2">meetings
+                                                    <label class="switch switch-3d switch-success mx-2">
                                                         <input type="checkbox" class="switch-input" id="status" onchange="set_status(this)">
                                                         <span class="switch-label"></span>
                                                         <span class="switch-handle"></span>
@@ -166,4 +182,21 @@
 
 @push('scripts')
     {!! Html::script(url('vendor/biopartnering/js/user.js')) !!}
+    {!! Html::script(url('vendor/biopartnering/js/moment.min.js')) !!}
+    {!! Html::script(url('vendor/biopartnering/js/bootstrap-datetimepicker.js')) !!}
+
+    <script type="text/javascript">        
+        $(function () 
+        {
+            $('#date_timepicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+            $('#from_timepicker').datetimepicker({
+                format: 'hh:mmA'
+            });
+            $('#to_timepicker').datetimepicker({
+                format: 'hh:mmA'
+            });
+        });
+    </script>
 @endpush

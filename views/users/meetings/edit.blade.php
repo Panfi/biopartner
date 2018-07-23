@@ -2,6 +2,10 @@
 
 @section('content')
 
+@push('style')
+    {!! Html::style(url('vendor/biopartnering/css/bootstrap-datetimepicker.min.css')) !!}
+@endpush
+
 @php($recipients = array_pluck(Msg::recipients(), 'email', 'id'))
 
 <div class="row">
@@ -11,21 +15,13 @@
                 Meeting Update
             </div>
             <div class="card-body">
-                {!! Form::open(['url' => url('user/meeting/edit'), 'novalidate', 'id' => 'login-form']) !!}
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="recipient" class="form-control-label">Recipient</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            {!! Form::select('recipient', $recipients, '', ['class' => 'form-control', 'id' => 'recipient']) !!}
-                        </div>
-                    </div>
+                {!! Form::open(['url' => url('user/meeting/edit', $meeting->id), 'method' => 'put', 'novalidate', 'id' => 'login-form']) !!}
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="subject" class=" form-control-label">Subject</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" class="form-control">
+                            <input type="text" id="subject" name="subject" placeholder="Subject" class="form-control" value="{!! $meeting->subject !!}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -33,7 +29,12 @@
                             <label for="start_date" class=" form-control-label">Start Date</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="date" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                            <div class='input-group date' id='start_date_timepicker'>
+                                <input type="text" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -41,7 +42,12 @@
                             <label for="end_date" class="form-control-label">End Date</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="date" id="end_date" name="end_date" placeholder="End Date" class="form-control">
+                            <div class='input-group date' id='end_date_timepicker'>
+                                <input type="text" id="end_date" name="end_date" placeholder="End Date" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -49,14 +55,14 @@
                             <label for="body" class=" form-control-label">Body</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <textarea name="body" id="body" rows="9" placeholder="Body" class="form-control"></textarea>
+                            <textarea name="body" id="body" rows="9" placeholder="Body" class="form-control">{!! $meeting->body !!}</textarea>
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-lg-4 offset-lg-8">
                                 <button type="submit" class="btn btn-outline-secondary btn-block">
-                                    <i class="fa fa-check"></i> Send
+                                    <i class="fa fa-check"></i> Update
                                 </button>
                             </div>
                         </div>
@@ -70,5 +76,21 @@
 @endsection
 
 @push('scripts')
+    {!! Html::script(url('vendor/biopartnering/js/moment.min.js')) !!}
+    {!! Html::script(url('vendor/biopartnering/js/bootstrap-datetimepicker.js')) !!}
 
+    <script type="text/javascript">        
+        $(function () 
+        {
+            $('#start_date_timepicker').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm',
+                defaultDate: "{!! $meeting->start_at !!}",
+            });
+
+            $('#end_date_timepicker').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm',
+                defaultDate: "{!! $meeting->end_at !!}",
+            });
+        });
+    </script>
 @endpush

@@ -1616,7 +1616,7 @@
   "use strict";
 
   // Load more
-  try {
+  /*try {
     var list_load = $('.js-list-load');
     if (list_load[0]) {
       list_load.each(function () {
@@ -1635,7 +1635,7 @@
     }
   } catch (error) {
     console.log(error);
-  }
+  }*/
 
 })(jQuery);
 (function ($) {

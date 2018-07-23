@@ -2,6 +2,10 @@
 
 @section('content')
 
+@push('style')
+    {!! Html::style(url('vendor/biopartnering/css/bootstrap-datetimepicker.min.css')) !!}
+@endpush
+
 @php($recipients = array_pluck(Msg::recipients(), 'email', 'id'))
 
 <div class="row">
@@ -33,7 +37,12 @@
                             <label for="start_date" class=" form-control-label">Start Date</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="date" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                            <div class='input-group date' id='start_date_timepicker'>
+                                <input type="text" id="start_date" name="start_date" placeholder="Start Date" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -41,7 +50,12 @@
                             <label for="end_date" class="form-control-label">End Date</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="date" id="end_date" name="end_date" placeholder="End Date" class="form-control">
+                            <div class='input-group date' id='end_date_timepicker'>
+                                <input type="text" id="end_date" name="end_date" placeholder="End Date" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -70,5 +84,19 @@
 @endsection
 
 @push('scripts')
+    {!! Html::script(url('vendor/biopartnering/js/moment.min.js')) !!}
+    {!! Html::script(url('vendor/biopartnering/js/bootstrap-datetimepicker.js')) !!}
 
+    <script type="text/javascript">        
+        $(function () 
+        {
+            $('#start_date_timepicker').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm'
+            });
+
+            $('#end_date_timepicker').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm'
+            });
+        });
+    </script>
 @endpush
