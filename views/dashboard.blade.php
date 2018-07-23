@@ -115,7 +115,7 @@
                         @endif
                     </div>
                     <div class="au-task__footer">
-                        <a href="{!! url('user/meeting/edit', $meeting->id) !!}" class="au-btn au-btn-load js-load-btn">View more</a>
+                        <a href="{!! url('user/meetings') !!}" class="au-btn au-btn-load js-load-btn">View more</a>
                     </div>
                 </div>
             </div>
