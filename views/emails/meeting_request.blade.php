@@ -6,7 +6,7 @@
     <h2>Meeting Request</h2>
     <br/>
     <p>Organizer: {{ $input['organizer'] }}</p>
-    <p>Subject: {{ $input['title'] }}</p>
+    <p>Subject: {{ $input['title'] }} ( {{ $input['room_number'] }})</p>
     <p>Start Time: {{ date('F d, Y H:i', strtotime($input['start_at'])) }}</p>
     <p>End Time: {{ date('F d, Y H:i', strtotime($input['end_at'])) }}</p>
     <p>

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{!! config('app.name', 'Bio Partnering') !!}</title>
+    <title>{!! config('app.name', 'Bio Partner') !!}</title>
 
     <!-- Styles -->
     {!! Html::style(url('vendor/biopartnering/css/font-face.css'), ['media' => 'all']) !!}

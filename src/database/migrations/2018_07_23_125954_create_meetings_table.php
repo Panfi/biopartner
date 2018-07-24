@@ -18,6 +18,7 @@ class CreateMeetingsTable extends Migration
             $table->integer('organizer_id')->unsigned();
             $table->string('subject');
             $table->text('body');
+            $table->string('room_number');
             $table->boolean('is_active')->default(true);
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();

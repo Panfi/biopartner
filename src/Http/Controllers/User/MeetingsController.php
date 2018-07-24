@@ -36,6 +36,7 @@ class MeetingsController extends Controller
             $meeting->organizer_id = Auth::user()->id;
             $meeting->subject = $request->get('subject');
             $meeting->body = $request->get('body');
+            $meeting->room_number = $request->get('room_number');
             $meeting->start_at = $request->get('start_date');
             $meeting->end_at = $request->get('end_date');
             $meeting->save();
@@ -52,7 +53,8 @@ class MeetingsController extends Controller
                 'to' => $user->email, 
                 'title' => $meeting->subject, 
                 'start_at' => $meeting->start_at, 
-                'end_at' => $meeting->end_at
+                'end_at' => $meeting->end_at,
+                'room_number' => $meeting->room_number
             ];
 
             $this->send_meeting_request_mail($input);
@@ -71,6 +73,7 @@ class MeetingsController extends Controller
             // $meeting->organizer_id = Auth::user()->id;
             $meeting->subject = $request->get('subject');
             $meeting->body = $request->get('body');
+            $meeting->room_number = $request->get('room_number');
             $meeting->start_at = $request->get('start_date');
             $meeting->end_at = $request->get('end_date');
             $meeting->save();
@@ -112,7 +115,7 @@ class MeetingsController extends Controller
             foreach($meetings as $meeting)
             {
                 $events[] = Calendar::event(
-                    $meeting->subject,
+                    $meeting->subject . " (Room " . $meeting->room_number . ")",
                     false,
                     $meeting->start_at,
                     $meeting->end_at,
@@ -131,7 +134,7 @@ class MeetingsController extends Controller
             {
                 $meeting = $invite->meeting;
                 $events[] = Calendar::event(
-                    $meeting->subject,
+                    $meeting->subject . " (Room " . $meeting->room_number . ")",
                     false,
                     $meeting->start_at,
                     $meeting->end_at,

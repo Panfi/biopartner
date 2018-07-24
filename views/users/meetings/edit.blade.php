@@ -6,7 +6,15 @@
     {!! Html::style(url('vendor/biopartnering/css/bootstrap-datetimepicker.min.css')) !!}
 @endpush
 
-@php($recipients = array_pluck(Msg::recipients(), 'email', 'id'))
+@php
+$recipients = array_pluck(Msg::recipients(), 'email', 'id');
+$room_numbers = [];
+
+for($i = 1; $i <=28; $i++)
+{
+    $room_numbers[$i] = "Room $i";
+}
+@endphp
 
 <div class="row">
     <div class="col-lg-12">
@@ -16,6 +24,14 @@
             </div>
             <div class="card-body">
                 {!! Form::open(['url' => url('user/meeting/edit', $meeting->id), 'method' => 'put', 'novalidate', 'id' => 'login-form']) !!}
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="room_number" class="form-control-label">Room Number</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            {!! Form::select('room_number', $room_numbers, $meeting->room_number, ['class' => 'form-control', 'id' => 'room_number']) !!}
+                        </div>
+                    </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="subject" class=" form-control-label">Subject</label>

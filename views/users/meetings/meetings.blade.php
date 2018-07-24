@@ -15,7 +15,7 @@
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            {{-- <th class="text-center">Active</th> --}}
+                            <th>Room Number</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Created Date</th>
@@ -29,7 +29,7 @@
                             <td class="text-info pointer" title="{!! $meeting->body !!}" data-toggle="tooltip">
                                 {!! $meeting->subject !!}
                             </td>
-                            {{-- <td class="text-center {!! ($meeting->is_active) ? 'process' : 'denied' !!}">{!! ($meeting->is_active) ? "Yes" : "No" !!}</td> --}}
+                            <td>Room {!! $meeting->room_number !!}</td>
                             <td>{!! date('F d, Y H:i', strtotime($meeting->start_at)) !!}</td>
                             <td>{!! date('F d, Y H:i', strtotime($meeting->end_at)) !!}</td>
                             <td>{!! date('F d, Y H:i', strtotime($meeting->created_at)) !!}</td>
