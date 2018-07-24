@@ -17,23 +17,23 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="far fa-check-square"></i>Messages
-                    </a>
-                </li>
-                <li>
                     <a href="{!! url('user/calender') !!}">
                         <i class="fas fa-calendar-alt"></i>Calendar
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-map-marker-alt"></i>My Notes
+                        <i class="zmdi zmdi-email"></i>Messages
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-map-marker-alt"></i>Groups
+                        <i class="fas fa-bars"></i>My Notes
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-user"></i>Groups
                     </a>
                 </li>
             </ul>

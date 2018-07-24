@@ -14,7 +14,7 @@
 
 Route::group(['middleware' => 'auth'], function ()
 {
-    Route::any('/', function ()
+    Route::any('/', function()
     {
         // Uses Auth Middleware
     });

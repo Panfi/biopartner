@@ -53,20 +53,6 @@
 
     <!-- Scripts -->
     <script type="text/javascript">
-        /*window.onbeforeunload = function (e)
-        {
-            //baseZ: 999999999
-            $.blockUI({message: '<img src="{!! asset('vendor/biopartnering/img/loader.gif') !!}">', css: {backgroundColor: 'transparent', border: 'none', cursor: 'wait'}, baseZ: 999999999});
-        };
-
-        $(document).ajaxStart(function ()
-        {
-            $.blockUI({message: '<img src="{!! asset('vendor/biopartnering/img/loader.gif') !!}">', css: {backgroundColor: 'transparent', border: 'none', cursor: 'wait'}, baseZ: 9999});
-        }).ajaxStop(function ()
-        {
-            $.unblockUI();
-        });*/
-
         var base_url = "{!! url('') !!}";
         var _token = "{{ csrf_token() }}";
     </script>
@@ -96,6 +82,8 @@
 {!! Html::script(url('vendor/biopartnering/js/custom.js')) !!}
 
 @stack('scripts')
+
+@include('biopartnering::layouts.common.loader')
 
 @if(Session::has('flash_error'))
 

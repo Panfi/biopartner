@@ -26,6 +26,6 @@ class Mailer extends Mailable
         $subject = $this->input['subject'];
         $mail_template = $this->input['mail_template'];
 
-        return $this->subject($subject)->from("info@creatic.co.za", 'Creatic')->view($mail_template);
+        return $this->subject($subject)->from(env('MAIL_FROM_ADDRESS', 'noreply@domain.com'), env('MAIL_FROM_NAME', 'No Reply'))->view($mail_template);
     }
 }

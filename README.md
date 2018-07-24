@@ -28,6 +28,12 @@ Open up `config/app.php` and add the following to the `providers` key.
 
 * `biopartnering\biopartnering\BioPartneringServiceProvider::class`
 
+Update your mail server credentials add below to your .env file:
+
+```bash
+MAIL_FROM_ADDRESS=postmaster@mg.hybse.com
+MAIL_FROM_NAME="Bio Africa"
+```
 
 Update DB credentials on your .env file:
 

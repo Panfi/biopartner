@@ -15,8 +15,8 @@
         <div class="container-fluid">
             <div class="header-wrap">
                 <form class="form-header" action="#" method="POST">
-                    <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                    <button class="au-btn--submit" type="submit">
+                    <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; meetings . . ." />
+                    <button class="au-btn--submit disabled" type="button">
                         <i class="zmdi zmdi-search"></i>
                     </button>
                 </form>
@@ -83,7 +83,8 @@
                                 @endif
 
                                 <div class="email__footer">
-                                    <a href="{!! url('user/messages') !!}">See all emails</a>
+                                    {{-- <a href="{!! url('user/messages') !!}">See all emails</a> --}}
+                                    <a href="#">See all emails</a>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +113,8 @@
                                     @endforeach
                                 @endif
                                 <div class="notifi__footer">
-                                    <a href="{!! url('user/notifications') !!}">All notifications</a>
+                                    {{-- <a href="{!! url('user/notifications') !!}">All notifications</a> --}}
+                                    <a href="#">See all notifications</a>
                                 </div>
                             </div>
                         </div>

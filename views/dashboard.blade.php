@@ -11,7 +11,7 @@
                             <i class="zmdi zmdi-account-o"></i>
                         </div>
                         <div class="text">
-                            <h2>{!! count(Msg::recipients()) !!}</h2>
+                            <h2>{!! count(Msg::recipients()) + 1 !!}</h2>
                             <span>Total members</span>
                         </div>
                     </div>
