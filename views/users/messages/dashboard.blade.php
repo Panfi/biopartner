@@ -10,13 +10,7 @@
                         <a class="nav-link compose" href="javascript:;" onclick="get_message_content('compose')">Compose</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link inbox active" href="javascript:;" onclick="get_message_content('inbox')">Inbox</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link sent" href="javascript:;" onclick="get_message_content('sent')">Sent Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link trash" href="javascript:;" onclick="get_message_content('trash')">Trash</a>
+                        <a class="nav-link inbox active" href="javascript:;" onclick="get_message_content('inbox')">Messages</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="message-content-holder">

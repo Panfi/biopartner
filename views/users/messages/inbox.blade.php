@@ -1,6 +1,6 @@
 @php
-    $all_messages = Msg::UserAll();
-    $unread_messages = Msg::UserUnread();
+    $all_messages = Msg::all();
+    $unread_messages = Msg::unread();
     $total_unread_messages = $unread_messages->count();
 @endphp
 
@@ -30,10 +30,15 @@
                             @if($all_messages->count())
                                 @foreach($all_messages as $message)
                                     @php
-                                        $semail = $message->sender->email;
-                                        $pname = explode('@', $semail)[0];
+                                        $sender = $message->sender;
+                                        $details = ($sender->details->count()) ? array_pluck($sender->details, 'detail_value', 'detail_key') : [];
+                                        $fname = isset($details['first_name']) ? $details['first_name'] : '';
+                                        $lname = isset($details['last_name']) ? $details['last_name'] : '';
+                                        $pname =  (empty($fname) || empty($lname)) ? explode('@', $sender->email)[0] : $fname;
+                                        
                                         $class = ($message->is_read) ? '' : 'unread';
                                     @endphp
+                                    
                                     <div class="au-message__item {!! $class !!}" onclick="get_message_history('{!! $message->id !!}')">
                                         <div class="au-message__item-inner">
                                             <div class="au-message__item-text">
@@ -56,9 +61,9 @@
                             @endif
 
                         </div>
-                        <div class="au-message__footer">
+                        {{-- <div class="au-message__footer">
                             <button class="au-btn au-btn-load js-load-btn">load more</button>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="au-chat">

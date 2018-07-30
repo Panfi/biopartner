@@ -32,4 +32,12 @@ class MeetingInvites extends Model
     {
         return $this->belongsTo(Meeting::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function attendee()
+    {
+        return $this->belongsTo(User::class, 'attendee_id');
+    }
 }

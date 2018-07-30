@@ -9,7 +9,7 @@
         <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
                 <li class="active">
-                    <a class="js-arrow" href="{!! url('/') !!}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    <a href="{!! url('/') !!}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="{!! url('user/meetings') !!}">
@@ -22,20 +22,20 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{!! url('user/messages') !!}">
                         <i class="zmdi zmdi-email"></i>Messages
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#">
                         <i class="fas fa-bars"></i>My Notes
                     </a>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="#">
                         <i class="fas fa-user"></i>Groups
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>

@@ -20,7 +20,6 @@ class CreateMessagesTable extends Migration
             $table->integer('message_id')->nullable();
             $table->string('subject');
             $table->text('body');
-            $table->boolean('is_root')->default(true);
             $table->boolean('is_read')->default(false);
             $table->boolean('is_deleted')->default(false);
             $table->timestamp('created_at')->nullable();

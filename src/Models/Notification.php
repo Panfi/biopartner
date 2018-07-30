@@ -18,13 +18,5 @@ class Notification extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id', 'title', 'description'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function user_notifications()
-    {
-        return $this->hasMany(UserNotifications::class);
-    }
+    protected $fillable = ['id', 'user_id', 'meeting_id', 'title', 'description', 'is_read'];
 }

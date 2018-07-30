@@ -29,7 +29,8 @@ function send_message()
     {
         if (response.status == true)
         {
-            notify("success", "Your message has been successfully sent!");
+            //notify("success", "Your message has been successfully sent!");
+            get_message_content('inbox');
         }
         else
         {
@@ -69,7 +70,8 @@ function send_reply_message(sender_id, message_id, subject)
     {
         if (response.status == true)
         {
-            notify("success", "Your message has been successfully sent!");
+            //notify("success", "Your message has been successfully sent!");
+            get_message_history(message_id);
         }
         else
         {

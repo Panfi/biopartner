@@ -30,4 +30,12 @@ class Meeting extends Model
     {
         return $this->hasMany(MeetingInvites::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'organizer_id');
+    }
 }

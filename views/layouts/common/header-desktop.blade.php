@@ -1,11 +1,14 @@
  @php
     $user = Auth::user();
     $user_email = $user->email;
-    $profile_name = explode('@', $user_email)[0];
-    $unread_notifications = Notification::UserUnread();
+    $details = ($user->details->count()) ? array_pluck($user->details, 'detail_value', 'detail_key') : [];
+    $fname = isset($details['first_name']) ? $details['first_name'] : '';
+    $profile_name =  (empty($fname)) ? explode('@', $user_email)[0] : $fname;
+
+    $unread_notifications = Notification::unread();
     $total_unread_notifications = $unread_notifications->count();
 
-    $unread_messages = Msg::UserUnread();
+    $unread_messages = Msg::unread();
     $total_unread_messages = $unread_messages->count();
  @endphp
 
@@ -30,7 +33,7 @@
                                 <div class="mess__title">
                                     <p>You have 2 news message</p>
                                 </div>
-                                <div class="mess__item">
+                                <div class="mess__ite{!! url('user/messages') !!}m">
                                     <div class="image img-cir img-40">
                                         <img src="{!! asset('vendor/biopartnering/img/avatar-06.jpg') !!}" alt="Avatar" />
                                     </div>
@@ -61,30 +64,34 @@
                             <span class="quantity">{!! $total_unread_messages !!}</span>
                             <div class="email-dropdown js-dropdown">
                                 <div class="email__title">
-                                    <p>You have {!! $total_unread_messages !!} New Emails</p>
+                                    <p>You have {!! $total_unread_messages !!} New Messages</p>
                                 </div>
                                 @if($total_unread_messages)
-                                    @foreach($unread_messages as $message)
-                                    @php
-                                        $semail = $message->sender->email;
-                                        $pname = explode('@', $semail)[0];
-                                    @endphp
+                                    @foreach($unread_messages as $index=>$message)
+                                        @if($index <= 5)
+                                            @php
+                                                $sender = $message->sender;
+                                                $details = ($sender->details->count()) ? array_pluck($sender->details, 'detail_value', 'detail_key') : [];
+                                                $fname = isset($details['first_name']) ? $details['first_name'] : '';
+                                                $lname = isset($details['last_name']) ? $details['last_name'] : '';
+                                                $pname =  (empty($fname) || empty($lname)) ? explode('@', $sender->email)[0] : $fname;
+                                            @endphp
 
-                                        <div class="email__item">
-                                            <div class="image img-cir img-40">
-                                                <img src="{!! asset('vendor/biopartnering/img/avatar.jpg') !!}" alt="Avatar" />
+                                            <div class="email__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="{!! asset('vendor/biopartnering/img/avatar.jpg') !!}" alt="Avatar" />
+                                                </div>
+                                                <div class="content">
+                                                    <p>{!! substr($message->subject, 0, 33) !!}</p>
+                                                    <span>{!! $pname !!}, {!! date('F d, Y H:i', strtotime($message->created_at)) !!}</span>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <p>{!! substr($message->subject, 0, 33) !!}</p>
-                                                <span>{!! $pname !!}, {!! date('F d, Y H:i', strtotime($message->created_at)) !!}</span>
-                                            </div>
-                                        </div>
+                                        @endif
                                     @endforeach
                                 @endif
 
                                 <div class="email__footer">
-                                    {{-- <a href="{!! url('user/messages') !!}">See all emails</a> --}}
-                                    <a href="#">See all emails</a>
+                                    <a href="{!! url('user/messages') !!}">See all messages</a>
                                 </div>
                             </div>
                         </div>
@@ -96,25 +103,26 @@
                                     <p>You have {!! $total_unread_notifications !!} Notifications</p>
                                 </div>
                                 @if($total_unread_notifications)
-                                    @foreach($unread_notifications as $notification)
-                                        <a href="{!! url('user/notifications', $notification->id) !!}">
+                                    @foreach($unread_notifications as $index=>$notification)
+                                        @if($index <= 5)
                                             <div class="notifi__item">
                                                 <div class="bg-c1 img-cir img-40">
                                                     <i class="zmdi zmdi-email-open"></i>
                                                 </div>
                                                 <div class="content">
-                                                    <p>{!! substr($notification->details->title, 0, 33) !!}</p>
-                                                    <span class="date">
-                                                    {!! date('F d, Y H:i', strtotime($notification->created_at)) !!}
-                                                    </span>
+                                                    <a href="{!! url('user/notification/view', $notification->id) !!}">
+                                                        <p>{!! substr($notification->title, 0, 33) !!}</p>
+                                                        <span class="date">
+                                                            {!! date('F d, Y H:i', strtotime($notification->created_at)) !!}
+                                                        </span>
+                                                    </a>
                                                 </div>
                                             </div>
-                                        </a>
+                                        @endif
                                     @endforeach
                                 @endif
                                 <div class="notifi__footer">
-                                    {{-- <a href="{!! url('user/notifications') !!}">All notifications</a> --}}
-                                    <a href="#">See all notifications</a>
+                                    <a href="{!! url('user/notifications') !!}">All notifications</a>
                                 </div>
                             </div>
                         </div>

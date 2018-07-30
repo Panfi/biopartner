@@ -44,11 +44,15 @@ Route::group(['namespace' => '\biopartnering\biopartnering\Http\Controllers', 'm
         Route::get('/account', ['uses' => 'User\UserController@account']);
         Route::get('/settings', ['uses' => 'User\UserController@settings']);
         Route::get('/notifications/{id?}', ['uses' => 'User\MessagesController@notifications']);
+        Route::get('/notification/view/{id}', ['uses' => 'User\MessagesController@view_notification']);
+        Route::get('/notification/delete/{id}', ['uses' => 'User\MessagesController@delete_notification']);
+        
         Route::get('/messages/{id?}', ['uses' => 'User\MessagesController@messages']);
         Route::get('/meetings', ['uses' => 'User\MeetingsController@meetings']);
         Route::get('/calender', ['uses' => 'User\MeetingsController@calender']);
         Route::match(['get', 'post'], '/meeting/add', ['uses' => 'User\MeetingsController@add_meeting']);
         Route::match(['get', 'put'], '/meeting/edit/{id}', ['uses' => 'User\MeetingsController@edit_meeting']);
+        Route::get('/meeting/view/{id}', ['uses' => 'User\MeetingsController@view_meeting']);
         Route::get('/meeting/delete/{id}', ['uses' => 'User\MeetingsController@delete_meeting']);
         Route::get('/meeting/confirm/{id}/{accept}', ['uses' => 'User\MeetingsController@confirm_meeting']);
 

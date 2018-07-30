@@ -16,44 +16,65 @@
                         <tr>
                             <th>Subject</th>
                             <th>Room Number</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Created Date</th>
-                            <th>Updated Date</th>
-                            <th width="18%"></th>
+                            <th>Start At</th>
+                            <th>End At</th>
+                            <th>Invited</th>
+                            <th>Status</th>
+                            <th width="24%" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($meetings as $meeting)
+                        @php
+                            $invites = $meeting->invites;
+                            $invite = $invites[0];
+                            $attendee = $invite->attendee;
+                            $details = ($attendee->details->count()) ? array_pluck($attendee->details, 'detail_value', 'detail_key') : [];
+                            $fname = isset($details['first_name']) ? $details['first_name'] : '';
+                            $lname = isset($details['last_name']) ? $details['last_name'] : '';
+                            
+                            $email = $attendee->email;
+                            $invited =  (empty($fname) || empty($lname)) ? explode('@', $email)[0] : "$fname $lname";
+                        @endphp
+
                         <tr>
-                            <td class="text-info pointer" title="{!! $meeting->body !!}" data-toggle="tooltip">
+                            <td class="text-info pointer" title="{!! $meeting->body !!}" data-toggle="toolti">
                                 {!! $meeting->subject !!}
                             </td>
                             <td>Room {!! $meeting->room_number !!}</td>
                             <td>{!! date('F d, Y H:i', strtotime($meeting->start_at)) !!}</td>
                             <td>{!! date('F d, Y H:i', strtotime($meeting->end_at)) !!}</td>
-                            <td>{!! date('F d, Y H:i', strtotime($meeting->created_at)) !!}</td>
-                            <td>{!! date('F d, Y H:i', strtotime($meeting->updated_at)) !!}</td>
-                            <td>
+                            <td>{!! $invited !!}</td>
+                            <td>{!! $invite->status !!}</td>
+                            <td class="text-center">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="{!! url('user/meeting/edit', $meeting->id) !!}">
-                                            <i class="fa fa-pencil"></i> Edit
-                                        </a>
-                                    </div>
-                                    {{-- <div class="col-md-4">
-                                        <a href="{!! url('user/meeting/invite', $meeting->id) !!}" class="text-success">
-                                            <i class="fa fa-user"></i> Invite
-                                        </a>
-                                    </div> --}}
-                                    <div class="col-md-6">
-                                        <a href="{!! url('user/meeting/delete', $meeting->id) !!}" class="text-danger">
-                                            <i class="fa fa-remove"></i> Delete
-                                        </a>
-                                    </div>
+                                    @if($meeting->organizer_id == Auth::user()->id)
+                                        <div class="col-md-4">
+                                            <a href="{!! url('user/meeting/view', $meeting->id) !!}" class="text-success">
+                                                <i class="fa fa-user"></i> View
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="{!! url('user/meeting/edit', $meeting->id) !!}">
+                                                <i class="fa fa-pencil"></i> Edit
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="{!! url('user/meeting/delete', $meeting->id) !!}" class="text-danger">
+                                                <i class="fa fa-remove"></i> Delete
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12">
+                                            <a href="{!! url('user/meeting/view', $meeting->id) !!}" class="text-success">
+                                                <i class="fa fa-user"></i> View
+                                            </a>
+                                        </div>                                    
+                                    @endif
                                 </div>
                             </td>
                         </tr>
+
                         @endforeach
                     </tbody>
                 </table>

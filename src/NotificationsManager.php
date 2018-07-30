@@ -2,20 +2,25 @@
 
 namespace biopartnering\biopartnering;
 
-use \biopartnering\biopartnering\Models\UserNotifications;
+use \biopartnering\biopartnering\Models\Notification;
 use Auth;
 use Carbon;
 
 class NotificationsManager
 {
-    public function UserAll()
+    public function all()
     {
-        return UserNotifications::where('user_id', Auth::user()->id)->get();
+        return Notification::where('user_id', Auth::user()->id)->get();
     }
 
-    public function UserUnread()
+    public function unread()
     {
-        return UserNotifications::where('user_id', Auth::user()->id)->where('is_read', 0)->get();
+        return Notification::where('user_id', Auth::user()->id)->where('is_read', 0)->get();
+    }
+
+    public function create($data)
+    {
+        return Notification::create($data);
     }
 }
 

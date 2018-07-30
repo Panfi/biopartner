@@ -13,6 +13,7 @@ use Auth;
 use Response;
 use Carbon;
 use Calendar;
+use Notification;
 
 class MeetingsController extends Controller
 {
@@ -57,6 +58,8 @@ class MeetingsController extends Controller
                 'room_number' => $meeting->room_number
             ];
 
+            Notification::create(['user_id' => $invite->attendee_id, 'title' => 'Meeting Request (' . $meeting->subject . ')', 'description' => $meeting->body]);
+
             $this->send_meeting_request_mail($input);
 
             return redirect('user/meetings');
@@ -65,24 +68,24 @@ class MeetingsController extends Controller
         return view('biopartnering::users.meetings.add');
     }
 
+    public function view_meeting($id)
+    {
+        $meeting = Meeting::find($id);
+
+        return view('biopartnering::users.meetings.view', compact('meeting'));
+    }
+
     public function edit_meeting(Request $request, $id)
     {
         if($request->isMethod('put'))
         {
             $meeting = Meeting::find($id);
-            // $meeting->organizer_id = Auth::user()->id;
             $meeting->subject = $request->get('subject');
             $meeting->body = $request->get('body');
             $meeting->room_number = $request->get('room_number');
             $meeting->start_at = $request->get('start_date');
             $meeting->end_at = $request->get('end_date');
             $meeting->save();
-
-            // $invite = new MeetingInvites();
-            // $invite->meeting_id = $meeting->id;
-            // $invite->attendee_id = $request->get('recipient');
-            // $invite->created_at = Carbon\Carbon::now();
-            // $invite->save();
 
             return redirect('user/meetings');
         }
@@ -122,7 +125,7 @@ class MeetingsController extends Controller
                     null,
                     [
                         'color' => '#f05050',
-                        'url' => url('user/meeting/edit', $meeting->id),
+                        'url' => url('user/meeting/view', $meeting->id),
                     ]
                 );
             }
@@ -141,7 +144,7 @@ class MeetingsController extends Controller
                     null,
                     [
                         'color' => '#f05050',
-                        'url' => '#'//url('user/meeting/edit', $meeting->id),
+                        'url' => url('user/meeting/view', $meeting->id),
                     ]
                 );
             }
@@ -166,6 +169,18 @@ class MeetingsController extends Controller
         $invite = MeetingInvites::find($id);
         $invite->status = ($accept) ? "Accepted" : "Declined";
         $invite->save();
+
+        $meeting = $invite->meeting;
+        $attendee = $invite->attendee;
+
+        $details = ($attendee->details->count()) ? array_pluck($attendee->details, 'detail_value', 'detail_key') : [];
+        $fname = isset($details['first_name']) ? $details['first_name'] : '';
+        $lname = isset($details['last_name']) ? $details['last_name'] : '';
+        
+        $email = $attendee->email;
+        $invited =  (empty($fname) || empty($lname)) ? explode('@', $email)[0] : "$fname $lname";
+
+        Notification::create(['user_id' => $meeting->organizer_id, 'title' => 'Meeting ' . $invite->status . ' by ' . $invited, 'description' => $meeting->body]);
 
         return redirect('/user/meetings');
     }

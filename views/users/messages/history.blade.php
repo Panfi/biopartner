@@ -2,10 +2,13 @@
     $message_id = $message->id;
     $subject = $message->subject;
     $sender_id = $message->sender->id;
-    //$sender_id = ($message->sender->id == Auth::user()->id) ? $message->recipient->id : $message->sender->id;
+    $temp_sender_id = ($message->sender->id == Auth::user()->id) ? $message->recipient->id : $message->sender->id;
 
-    $sender_email = $message->sender->email;
-    $profile_name = explode('@', $sender_email)[0];
+    $sender = $message->sender;
+    $details = ($sender->details->count()) ? array_pluck($sender->details, 'detail_value', 'detail_key') : [];
+    $fname = isset($details['first_name']) ? $details['first_name'] : '';
+    $lname = isset($details['last_name']) ? $details['last_name'] : '';
+    $profile_name =  (empty($fname) || empty($lname)) ? explode('@', $sender->email)[0] : $fname;
 @endphp
 
 <div class="au-chat__title">
@@ -78,7 +81,7 @@
 <div class="au-chat-textfield">
     <form class="au-form-icon" id="reply-form">
         <input class="au-input au-input--full au-input--h65" type="text" id="message" placeholder="Type a message">
-        <button type="button" class="au-input-icon" onclick="send_reply_message('{!! $sender_id !!}', '{!! $message_id !!}', '{!! $subject !!}')">
+        <button type="button" class="au-input-icon" onclick="send_reply_message('{!! $temp_sender_id !!}', '{!! $message_id !!}', '{!! $subject !!}')">
             <i class="zmdi zmdi-camera"></i>
         </button>
     </form>

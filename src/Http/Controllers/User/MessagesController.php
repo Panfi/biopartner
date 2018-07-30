@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use biopartnering\biopartnering\Models\User;
 use biopartnering\biopartnering\Models\Message;
+use biopartnering\biopartnering\Models\Notification;
 use Auth;
 use Response;
 use Carbon;
@@ -19,7 +20,24 @@ class MessagesController extends Controller
 
     public function notifications()
     {
-        return view('biopartnering::users.notifications');
+        return view('biopartnering::users.notifications.notifications');
+    }
+
+    public function view_notification($id)
+    {
+        $notification = Notification::find($id);
+        $notification->is_read = true;
+        $notification->save();
+
+        return view('biopartnering::users.notifications.view', compact('notification'));
+    }
+
+    public function delete_notification($id)
+    {
+        $notification = Notification::find($id);
+        $notification->delete();
+
+        return redirect('user/notifications');
     }
 
     public function messages()
@@ -40,19 +58,12 @@ class MessagesController extends Controller
         $message_id = isset($data['message_id']) ? $data['message_id'] : null;
         $user_id = Auth::user()->id;
         
-        //Update root flag
-        if($message_id)
-        {
-            Message::where('message_id', $message_id)->where('sender_id', $user_id)->where('recipient_id', $data['recipient'])->update(['is_root' => 0]);
-        }
-
         $message = new Message();
         $message->sender_id = $user_id;
         $message->recipient_id = $data['recipient'];
         $message->message_id = $message_id;
         $message->subject = $data['subject'];
         $message->body = $data['message'];
-        $message->is_root = ($message_id) ? 1 : 0;
         $message->created_at = Carbon\Carbon::now();
         $message->save();
 
