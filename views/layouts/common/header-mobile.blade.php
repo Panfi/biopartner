@@ -35,7 +35,7 @@
                         <i class="zmdi zmdi-email"></i>Messages
                     </a>
                 </li>
-                <li>
+                <!--<li>
                     <a href="#">
                         <i class="fas fa-bars"></i>My Notes
                     </a>
@@ -44,7 +44,7 @@
                     <a href="#">
                         <i class="fas fa-user"></i>Groups
                     </a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>
