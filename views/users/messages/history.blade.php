@@ -80,9 +80,21 @@
 </div>
 <div class="au-chat-textfield">
     <form class="au-form-icon" id="reply-form">
-        <input class="au-input au-input--full au-input--h65" type="text" id="message" placeholder="Type a message">
+        <input class="au-input au-input--full au-input--h65" type="text" id="message" name="message" placeholder="Type a message">
         <button type="button" class="au-input-icon" onclick="send_reply_message('{!! $temp_sender_id !!}', '{!! $message_id !!}', '{!! $subject !!}')">
             <i class="zmdi zmdi-camera"></i>
         </button>
     </form>
 </div>
+
+<script type="text/javascript">
+    $("form#reply-form").validate({
+        onkeyup: false,
+        rules: {
+            message: { required: true},
+        },
+        tooltip_options: {
+            message: { placement: 'top' },
+        }
+    });
+</script>

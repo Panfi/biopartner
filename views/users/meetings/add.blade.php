@@ -23,7 +23,7 @@ for($i = 1; $i <=28; $i++)
                 New Meeting Request
             </div>
             <div class="card-body">
-                {!! Form::open(['url' => url('user/meeting/add'), 'novalidate', 'id' => 'login-form']) !!}
+                {!! Form::open(['url' => url('user/meeting/add'), 'novalidate', 'id' => 'meeting-form']) !!}
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="recipient" class="form-control-label">Recipient</label>
@@ -113,6 +113,22 @@ for($i = 1; $i <=28; $i++)
             $('#end_date_timepicker').datetimepicker({
                 format: 'YYYY-MM-DD hh:mm'
             });
+        });
+
+        $("form#meeting-form").validate({
+            onkeyup: false,
+            rules: {
+                subject: { required: true},
+                start_date: { required: true},
+                end_date: { required: true},
+                body: { required: true},
+            },
+            tooltip_options: {
+                subject: { placement: 'left' },
+                start_date: { placement: 'left' },
+                end_date: { placement: 'left' },
+                body: { placement: 'left' },
+            }
         });
     </script>
 @endpush

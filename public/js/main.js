@@ -152,7 +152,7 @@
           type: 'line',
           datasets: [{
             data: [65, 59, 84, 84, 51, 55],
-            label: 'Dataset',
+            label: 'Meetings',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
           },]

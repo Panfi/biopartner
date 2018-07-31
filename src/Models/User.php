@@ -88,7 +88,7 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function availability()
+    public function schedules()
     {
         return $this->hasMany(Availability::class);
     }

@@ -25,6 +25,11 @@ function send_message()
         message: form.find('#message').val()
     }
 
+    if(!$("form#compose-form").valid())
+    {
+        return false;
+    }
+
     $.doAJAX(base_url + '/user/ajax/send_message', { 'data': data }, 'POST', function (response)
     {
         if (response.status == true)
@@ -64,6 +69,11 @@ function send_reply_message(sender_id, message_id, subject)
         message_id: message_id,
         subject: subject,
         message: form.find('#message').val()
+    }
+
+    if(!$("form#reply-form").valid())
+    {
+        return false;
     }
 
     $.doAJAX(base_url + '/user/ajax/send_message', { 'data': data }, 'POST', function (response)

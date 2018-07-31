@@ -35,3 +35,17 @@
     </div>
  {!! Form::close() !!}
 </div>
+
+<script type="text/javascript">
+    $("form#compose-form").validate({
+        onkeyup: false,
+        rules: {
+            subject: { required: true},
+            message: { required: true},
+        },
+        tooltip_options: {
+            subject: { placement: 'top' },
+            message: { placement: 'top' },
+        }
+    });
+</script>

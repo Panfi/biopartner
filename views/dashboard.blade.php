@@ -2,6 +2,11 @@
 
 @section('content')
 
+    @php
+        $meetings = Auth::user()->meetings;
+        $invites = Auth::user()->invites;
+    @endphp
+
     <div class="row m-t-25">
         <div class="col-sm-6 col-lg-6">
             <div class="overview-item overview-item--c1">
@@ -16,7 +21,7 @@
                         </div>
                     </div>
                     <div class="overview-chart">
-                        <canvas id="widgetChart1"></canvas>
+                        {{-- <canvas id="widgetChart1"></canvas> --}}
                     </div>
                 </div>
             </div>
@@ -47,12 +52,12 @@
                             <i class="zmdi zmdi-calendar-note"></i>
                         </div>
                         <div class="text">
-                            <h2>13 meetings</h2>
-                            <span>this month</span>
+                            <h2>{!! $meetings->count() + $invites->count() !!}</h2>
+                            <span>meetings</span>
                         </div>
                     </div>
                     <div class="overview-chart">
-                        <canvas id="widgetChart3"></canvas>
+                        {{-- <canvas id="widgetChart3"></canvas> --}}
                     </div>
                 </div>
             </div>
@@ -93,10 +98,6 @@
                         <p>Your meetings</p>
                     </div>
                     <div class="au-task-list js-scrollbar3">
-                        @php
-                            $meetings = Auth::user()->meetings;
-                            $invites = Auth::user()->invites;
-                        @endphp
 
                         @if($invites->count())
                             @foreach ($invites as $index=>$invite)

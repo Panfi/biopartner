@@ -150,6 +150,29 @@ class MeetingsController extends Controller
             }
         }
 
+        //Availability
+        $schedules = Auth::user()->schedules;
+        if($schedules->count())
+        {
+            foreach($schedules as $schedule)
+            {
+                if($schedule['status'] == 'Not Available')
+                {
+                    $events[] = Calendar::event(
+                        $schedule['status'],
+                        false,
+                        !empty($schedule->from_time) ? $schedule->check_date . ' ' . $schedule->from_time : $schedule->check_date . ' 01:00',
+                        !empty($schedule->from_time) ? $schedule->check_date . ' ' . $schedule->to_time : $schedule->check_date . ' 23:59',
+                        null,
+                        [
+                            'color' => '#FF0000',
+                            'url' => url('user/settings'),
+                        ]
+                    );
+                }
+            }
+        }
+
         $calendar = Calendar::addEvents($events);
 
         return view('biopartnering::users.meetings.calender', compact('calendar'));
@@ -182,6 +205,6 @@ class MeetingsController extends Controller
 
         Notification::create(['user_id' => $meeting->organizer_id, 'title' => 'Meeting ' . $invite->status . ' by ' . $invited, 'description' => $meeting->body]);
 
-        return redirect('/user/meetings');
+        return redirect('/user/calender');
     }
 }

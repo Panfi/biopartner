@@ -52,3 +52,34 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $("form#pass-reset-form").validate({
+            onkeyup: false,
+            rules: {
+                email: { required: true, email: true },
+                password: { required: true, minlength: 8, pwcheck: true },
+                password_confirmation: { equalTo: "#password" },
+            },
+            messages: {
+                password: {
+                    pwcheck: "Password must contain at least one lowercase and uppercase character, one digit and symbol."
+                }
+            },
+            tooltip_options: {
+                email: { placement: 'right' },
+                password: { placement: 'right' },
+                password_confirmation: { placement: 'right' },
+            }
+        });
+
+        $.validator.addMethod("pwcheck", function(value) 
+        {
+            return /[A-Z]/.test(value) // has a uppercase letter
+                && /[a-z]/.test(value) // has a lowercase letter
+                && /\d/.test(value) // has a digit
+                && /[-@._*!-&~#$%^&*()+=]/.test(value) // has a symbol
+        });
+    </script>
+@endpush

@@ -15,6 +15,11 @@ function save_account_details()
         google_plus_handle: form.find('#google_plus_handle').val()
     }
 
+    if(!$("form#account-form").valid())
+    {
+        return false;
+    }
+
     $.doAJAX(base_url + '/user/ajax/save_account_details', { 'data': data }, 'POST', function (response)
     {
         if (response.status == true)
@@ -37,6 +42,11 @@ function change_password()
         confirm_new_password: form.find('#confirm_new_password').val()
     }
 
+    if(!$("form#password-form").valid())
+    {
+        return false;
+    }
+
     $.doAJAX(base_url + '/user/ajax/change_password', { 'data': data }, 'PUT', function (response)
     {
         if (response.status == true)
@@ -57,6 +67,11 @@ function change_email()
         old_email: form.find('#old_email').val(),
         new_email: form.find('#new_email').val(),
         confirm_new_email: form.find('#confirm_new_email').val()
+    }
+
+    if(!$("form#email-form").valid())
+    {
+        return false;
     }
 
     $.doAJAX(base_url + '/user/ajax/change_email', { 'data': data }, 'PUT', function (response)
@@ -156,6 +171,11 @@ function save_availability_details()
         status: (form.find('#status').attr('checked')) ? 'Available' : 'Not Available'
     }
     
+    if(!form.valid())
+    {
+        return false;
+    }
+
     $.doAJAX(base_url + '/user/ajax/add_availability', { 'data': data }, 'POST', function (response)
     {
         if (response.status == true)

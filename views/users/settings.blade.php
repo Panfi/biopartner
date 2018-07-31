@@ -192,11 +192,71 @@
                 format: 'YYYY-MM-DD'
             });
             $('#from_timepicker').datetimepicker({
-                format: 'hh:mmA'
+                //format: 'hh:mmA'
+                format: 'hh:mm'
             });
             $('#to_timepicker').datetimepicker({
-                format: 'hh:mmA'
+                //format: 'hh:mmA'
+                format: 'hh:mm'
             });
+        });
+
+        $("form#password-form").validate({
+            onkeyup: false,
+            rules: {
+                old_password: { required: true, minlength: 8, pwcheck: true },
+                new_password: { required: true, minlength: 8, pwcheck: true },
+                confirm_new_password: { equalTo: "#new_password" },
+            },
+            messages: {
+                old_password: {
+                    pwcheck: "Password must contain at least one lowercase and uppercase character, one digit and symbol."
+                },
+                new_password: {
+                    pwcheck: "Password must contain at least one lowercase and uppercase character, one digit and symbol."
+                }
+            },
+            tooltip_options: {
+                old_password: { placement: 'right' },
+                new_password: { placement: 'right' },
+                confirm_new_password: { placement: 'right' },
+            }
+        });
+
+        $.validator.addMethod("pwcheck", function(value) 
+        {
+            return /[A-Z]/.test(value) // has a uppercase letter
+                && /[a-z]/.test(value) // has a lowercase letter
+                && /\d/.test(value) // has a digit
+                && /[-@._*!-&~#$%^&*()+=]/.test(value) // has a symbol
+        });
+
+        $("form#email-form").validate({
+            onkeyup: false,
+            rules: {
+                old_email: { required: true, email: true },
+                new_email: { required: true, email: true },
+                confirm_new_email: { equalTo: "#new_email" },
+            },
+            tooltip_options: {
+                old_email: { placement: 'left' },
+                new_email: { placement: 'left' },
+                confirm_new_email: { placement: 'left' },
+            }
+        });
+
+        $("form#availability-form").validate({
+            onkeyup: false,
+            rules: {
+                date: { required: true },
+                //from_time: { required: true },
+                //to_time: { required: true },
+            },
+            tooltip_options: {
+                date: { placement: 'top' },
+                //from_time: { placement: 'top' },
+                //to_time: { placement: 'top' },
+            }
         });
     </script>
 @endpush

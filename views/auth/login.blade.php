@@ -60,3 +60,19 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $("form#login-form").validate({
+            onkeyup: false,
+            rules: {
+                email: { required: true, email: true },
+                password: { required: true},
+            },
+            tooltip_options: {
+                email: { placement: 'right' },
+                password: { placement: 'right' },
+            }
+        });
+    </script>
+@endpush

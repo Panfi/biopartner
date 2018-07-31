@@ -56,6 +56,15 @@
                         <td>Message</td>
                         <td>{!! nl2br($meeting->body) !!}</td>
                     </tr>
+                    @if($attendee->id == Auth::user()->id)
+                        <tr>
+                            <td>Action</td>
+                            <td>
+                                <a href="{{ url('user/meeting/confirm/' . $invite->id . '/1' )}}">Accept</a> | 
+                                <a href="{{ url('user/meeting/confirm/' . $invite->id . '/0' )}}">Decline</a>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

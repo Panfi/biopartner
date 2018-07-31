@@ -14,7 +14,7 @@
         </p>
         
         <div class="login-form">
-            {!! Form::open(['url' => url('/password/email'), 'novalidate', 'id' => 'login-form']) !!}
+            {!! Form::open(['url' => url('/password/email'), 'novalidate', 'id' => 'reset-form']) !!}
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 {!! Form::label('email', 'E-Mail Address') !!}
@@ -53,4 +53,15 @@
 
     @endif
 
+    <script type="text/javascript">
+        $("form#reset-form").validate({
+            onkeyup: false,
+            rules: {
+                email: { required: true, email: true }
+            },
+            tooltip_options: {
+                email: { placement: 'right' }
+            }
+        });
+    </script>
 @endpush

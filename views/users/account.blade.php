@@ -142,4 +142,24 @@
 
 @push('scripts')
     {!! Html::script(url('vendor/biopartnering/js/user.js')) !!}
+
+    <script type="text/javascript">
+        $("form#account-form").validate({
+            onkeyup: false,
+            rules: {
+                first_name: { required: true},
+                last_name: { required: true},
+                department: { required: true},
+                job_title: { required: true},
+                job_description: { required: true},
+            },
+            tooltip_options: {
+                first_name: { placement: 'top' },
+                last_name: { placement: 'top' },
+                department: { placement: 'top' },
+                job_title: { placement: 'top' },
+                job_description: { placement: 'top' },
+            }
+        });
+    </script>
 @endpush

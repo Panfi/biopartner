@@ -23,7 +23,7 @@ for($i = 1; $i <=28; $i++)
                 Meeting Update
             </div>
             <div class="card-body">
-                {!! Form::open(['url' => url('user/meeting/edit', $meeting->id), 'method' => 'put', 'novalidate', 'id' => 'login-form']) !!}
+                {!! Form::open(['url' => url('user/meeting/edit', $meeting->id), 'method' => 'put', 'novalidate', 'id' => 'meeting-form']) !!}
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="room_number" class="form-control-label">Room Number</label>
@@ -95,7 +95,7 @@ for($i = 1; $i <=28; $i++)
     {!! Html::script(url('vendor/biopartnering/js/moment.min.js')) !!}
     {!! Html::script(url('vendor/biopartnering/js/bootstrap-datetimepicker.js')) !!}
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
         $(function () 
         {
             $('#start_date_timepicker').datetimepicker({
@@ -107,6 +107,22 @@ for($i = 1; $i <=28; $i++)
                 format: 'YYYY-MM-DD hh:mm',
                 defaultDate: "{!! $meeting->end_at !!}",
             });
+        });
+
+        $("form#meeting-form").validate({
+            onkeyup: false,
+            rules: {
+                subject: { required: true},
+                start_date: { required: true},
+                end_date: { required: true},
+                body: { required: true},
+            },
+            tooltip_options: {
+                subject: { placement: 'left' },
+                start_date: { placement: 'left' },
+                end_date: { placement: 'left' },
+                body: { placement: 'left' },
+            }
         });
     </script>
 @endpush

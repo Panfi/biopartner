@@ -66,7 +66,9 @@
 </div>
 
 {!! Html::script(url('vendor/biopartnering/js/jquery-3.2.1.min.js')) !!}
+{!! Html::script(url('vendor/biopartnering/js/jquery.validate.min.js')) !!}
 {!! Html::script(url('vendor/biopartnering/js/popper.min.js')) !!}
+{!! Html::script(url('vendor/biopartnering/js/jquery-validate.bootstrap-tooltip.js')) !!}
 {!! Html::script(url('vendor/biopartnering/js/bootstrap.min.js')) !!}
 {!! Html::script(url('vendor/biopartnering/js/slick.min.js')) !!}
 {!! Html::script(url('vendor/biopartnering/js/wow.min.js')) !!}
