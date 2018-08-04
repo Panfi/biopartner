@@ -16,7 +16,7 @@ To get the latest version of Laravel, and simply add the following to your `comp
 ],
 
 "require": {
-	"gladwelln/biopartnering": "dev-master"
+	"biopartnering/biopartnering": "dev-master"
 }
 ```
 
